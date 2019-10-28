@@ -17,13 +17,10 @@
 		<br>
 		<button onclick="reset()";>Reset</button>
 		<input type="submit" style="opacity:0;" onSubmit="next()">
-		<p id="test">test</p>
 		</form>
 		<script>
 			form=document.getElementById("form")
 			inputs = ['dmg', 'reload', 'rate', 'mag', 'edps', 'epct', 'dps'];
-			function test(e){document.getElementById('test').innerText = e.key + " - " + e.code; console.log(e)}
-			document.onkeypress = test
 			if(form.attachEvent)
 				form.attachEvent("submit", next);
 			else
