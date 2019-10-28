@@ -6,6 +6,7 @@
 		</style>
 	</head>
 	<body>
+		<form id="form">
 		Damage<br><input inputmode="numeric" name="Damage" onchange="calc()" oninput="calc()" id="dmg"><br><br>
 		Reload<br><input type="number" onchange="calc()" oninput="calc()" id="reload"><br><br>
 		Fire Rate<br><input type="number" onchange="calc()" oninput="calc()" id="rate"><br><br>
@@ -15,7 +16,25 @@
 		Effective DPS<br><input type="number" onchange="calc()" oninput="calc()" id="dps"><br><br>
 		<br>
 		<button onclick="reset()";>Reset</button>
+		<input type="submit" style="opacity:0;" onSubmit="next()">
+		</form>
 		<script>
+			form=document.getElementById("form")
+			inputs = ['dmg', 'reload', 'rate', 'mag', 'edps', 'epct', 'dps'];
+			if(form.attachEvent)
+				form.attachEvent("submit", next);
+			else
+				form.addEventListener("submit", next);
+
+			function next(e)
+			{
+				if(e.preventDefault) e.preventDefault();
+				idx = inputs.indexOf(document.activeElement.id)
+				//this produces an error "Cannot read property 'focus' of null" on last input field
+				if(idx > -1 && idx<(inputs.length)){
+					document.getElementById(inputs[idx+1]).focus();
+				}
+			}
 			function isNumeric(n) 
 			{
 				return !isNaN(parseFloat(n)) && isFinite(n);
@@ -30,14 +49,13 @@
 				}
 				else if(e.value != "")
 					e.style.backgroundColor = "indianred"
-				// else if(e.value == "")
-				// 	e.value = e.name
+				else if(e.value == "" && e != document.activeElement)
+					e.value = e.name
 				return null
 			}
 			function reset()
 			{
 				console.log("resetting")
-				inputs = ['dmg', 'reload', 'rate', 'mag', 'edps', 'epct', 'dmg'];
 				for (id of inputs)
 					document.getElementById(id).value = "";
 			}
