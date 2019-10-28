@@ -1,12 +1,12 @@
 <html>
 	<body>
-		<p>Damage</p><input onchange="calc()" oninput="calc()" id="dmg"><br>
-		<p>Reload</p><input onchange="calc()" oninput="calc()" id="reload"><br>
-		<p>Fire Rate</p><input onchange="calc()" oninput="calc()" id="rate"><br>
-		<p>Magazine Size</p><input onchange="calc()" oninput="calc()" id="mag"><br>
-		<p>Elemental DPS</p><input onchange="calc()" oninput="calc()" id="edps"><br>
-		<p>Elemental Chance</p><input onchange="calc()" oninput="calc()" id="epct"><br>
-		<p>Effective DPS</p><input onchange="calc()" oninput="calc()" id="dps"><br>
+		<p>Damage</p><input type="number" onchange="calc()" oninput="calc()" id="dmg"><br>
+		<p>Reload</p><input type="number" onchange="calc()" oninput="calc()" id="reload"><br>
+		<p>Fire Rate</p><input type="number" onchange="calc()" oninput="calc()" id="rate"><br>
+		<p>Magazine Size</p><input type="number" onchange="calc()" oninput="calc()" id="mag"><br>
+		<p>Elemental DPS</p><input type="number" onchange="calc()" oninput="calc()" id="edps"><br>
+		<p>Elemental Chance</p><input type="number" onchange="calc()" oninput="calc()" id="epct"><br>
+		<p>Effective DPS</p><input type="number" onchange="calc()" oninput="calc()" id="dps"><br>
 		<button onclick="reset()";>Reset</button>
 		<script>
 			function isNumeric(n) 
