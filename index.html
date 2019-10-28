@@ -1,6 +1,55 @@
 <html>
-	<head></head>
 	<body>
-		<p>Hello World</p>
+		<p>Damage</p><input onchange="calc()" oninput="calc()" id="dmg"><br>
+		<p>Reload</p><input onchange="calc()" oninput="calc()" id="reload"><br>
+		<p>Fire Rate</p><input onchange="calc()" oninput="calc()" id="rate"><br>
+		<p>Magazine Size</p><input onchange="calc()" oninput="calc()" id="mag"><br>
+		<p>Elemental DPS</p><input onchange="calc()" oninput="calc()" id="edps"><br>
+		<p>Elemental Chance</p><input onchange="calc()" oninput="calc()" id="epct"><br>
+		<p>Effective DPS</p><input onchange="calc()" oninput="calc()" id="dps"><br>
+		<button onclick="reset()";>Reset</button>
+		<script>
+			function isNumeric(n) 
+			{
+				return !isNaN(parseFloat(n)) && isFinite(n);
+			}
+			function getvalfromid(id)
+			{
+				e = document.getElementById(id)
+				if(isNumeric(e.value))
+				{
+					e.style.backgroundColor = ""
+					return e.value
+				}
+				else if(e.value != "")
+					e.style.backgroundColor = "indianred"
+				return null
+			}
+			function reset()
+			{
+				console.log("resetting")
+				inputs = ['dmg', 'reload', 'rate', 'mag', 'edps', 'epct', 'dmg'];
+				for (id of inputs)
+					document.getElementById(id).value = "";
+			}
+			function calc()
+			{
+				dmg = getvalfromid('dmg')
+				reload = getvalfromid('reload')
+				rate = getvalfromid('rate')
+				mag = getvalfromid('mag')
+				edps = getvalfromid('edps')
+				epct = getvalfromid('epct')
+				dps = 0
+				if(dmg && reload && rate && mag)
+					dps = (dmg*mag)/(mag/rate + reload)
+				if(epct && edps)
+					dps += edps*(epct/100)
+				console.log("dps is ", dps)
+				if(dps)
+					document.getElementById('dps').value = dps
+
+			}
+		</script>
 	</body>
 </html>
