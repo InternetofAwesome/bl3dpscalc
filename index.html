@@ -1,39 +1,42 @@
 <html>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<head>
-		<style> 
-			input: {type: number;}
-		</style>
 	</head>
 	<body>
-		<form id="form">
+		<form id="frm">
 		Damage<br><input inputmode="numeric" name="Damage" onchange="calc()" oninput="calc()" id="dmg"><br><br>
-		Reload<br><input type="number" onchange="calc()" oninput="calc()" id="reload"><br><br>
-		Fire Rate<br><input type="number" onchange="calc()" oninput="calc()" id="rate"><br><br>
-		Magazine Size<br><input type="number" onchange="calc()" oninput="calc()" id="mag"><br><br>
-		Elemental DPS<br><input type="number" onchange="calc()" oninput="calc()" id="edps"><br><br>
-		Elemental Chance<br><input type="number" onchange="calc()" oninput="calc()" id="epct"><br><br>
-		Effective DPS<br><input type="number" onchange="calc()" oninput="calc()" id="dps"><br><br>
+		Reload<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="reload"><br><br>
+		Fire Rate<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="rate"><br><br>
+		Magazine Size<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="mag"><br><br>
+		Elemental DPS<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="edps"><br><br>
+		Elemental Chance<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="epct"><br><br>
+		Effective DPS<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="dps"><br><br>
 		<br>
-		<button onclick="reset()";>Reset</button>
-		<input type="submit" style="opacity:0;" onSubmit="next()">
+		<!-- <button onclick="reset()";>Reset</button> reset screws things up for some reason.-->
+		<input type="submit" style="opacity:0;"></input>
 		</form>
 		<script>
-			form=document.getElementById("form")
+			frm=document.getElementById("frm")
 			inputs = ['dmg', 'reload', 'rate', 'mag', 'edps', 'epct', 'dps'];
-			if(form.attachEvent)
-				form.attachEvent("submit", next);
-			else
-				form.addEventListener("submit", next);
-
-			function next(e)
+			// if(frm.attachEvent)
+			// 	frm.attachEvent("submit", nextInput, false);
+			// else
+			// 	frm.addEventListener("submit", nextInput, false);
+			window.addEventListener("submit", nextInput, true);
+			HTMLFormElement.prototype.submit = nextInput
+			function nextInput(e)
 			{
+				console.log("value: " + document.activeElement.value)
 				if(e.preventDefault) e.preventDefault();
+				e.preventDefault()
+				e.stopImmediatePropagation();
+				
 				idx = inputs.indexOf(document.activeElement.id)
 				//this produces an error "Cannot read property 'focus' of null" on last input field
 				if(idx > -1 && idx<(inputs.length)){
 					document.getElementById(inputs[idx+1]).focus();
 				}
+				return true
 			}
 			function isNumeric(n) 
 			{
@@ -45,16 +48,17 @@
 				if(isNumeric(e.value))
 				{
 					e.style.backgroundColor = ""
-					return e.value
+					return parseFloat(e.value)
 				}
 				else if(e.value != "")
 					e.style.backgroundColor = "indianred"
-				else if(e.value == "" && e != document.activeElement)
-					e.value = e.name
+				// else if(e.value == "" && e != document.activeElement)
+				// 	e.value = e.name
 				return null
 			}
 			function reset()
 			{
+				alert("asdf")
 				console.log("resetting")
 				for (id of inputs)
 					document.getElementById(id).value = "";
