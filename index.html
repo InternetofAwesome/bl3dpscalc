@@ -1,13 +1,19 @@
 <html>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<head>
+		<style> 
+			input: {type: number;}
+		</style>
+	</head>
 	<body>
-		<p>Damage</p><input type="number" onchange="calc()" oninput="calc()" id="dmg"><br>
-		<p>Reload</p><input type="number" onchange="calc()" oninput="calc()" id="reload"><br>
-		<p>Fire Rate</p><input type="number" onchange="calc()" oninput="calc()" id="rate"><br>
-		<p>Magazine Size</p><input type="number" onchange="calc()" oninput="calc()" id="mag"><br>
-		<p>Elemental DPS</p><input type="number" onchange="calc()" oninput="calc()" id="edps"><br>
-		<p>Elemental Chance</p><input type="number" onchange="calc()" oninput="calc()" id="epct"><br>
-		<p>Effective DPS</p><input type="number" onchange="calc()" oninput="calc()" id="dps"><br>
+		Damage<br><input inputmode="numeric" name="Damage" onchange="calc()" oninput="calc()" id="dmg"><br><br>
+		Reload<br><input type="number" onchange="calc()" oninput="calc()" id="reload"><br><br>
+		Fire Rate<br><input type="number" onchange="calc()" oninput="calc()" id="rate"><br><br>
+		Magazine Size<br><input type="number" onchange="calc()" oninput="calc()" id="mag"><br><br>
+		Elemental DPS<br><input type="number" onchange="calc()" oninput="calc()" id="edps"><br><br>
+		Elemental Chance<br><input type="number" onchange="calc()" oninput="calc()" id="epct"><br><br>
+		Effective DPS<br><input type="number" onchange="calc()" oninput="calc()" id="dps"><br><br>
+		<br>
 		<button onclick="reset()";>Reset</button>
 		<script>
 			function isNumeric(n) 
@@ -24,6 +30,8 @@
 				}
 				else if(e.value != "")
 					e.style.backgroundColor = "indianred"
+				// else if(e.value == "")
+				// 	e.value = e.name
 				return null
 			}
 			function reset()
