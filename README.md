@@ -1,4 +1,4 @@
-# bl3dpscalc
+# Borderlands 3 Weapon DPS Calculator
 Click here for the live version of [Borderlands 3 Weapon DPS Calculator](https://internetofawesome.github.io/bl3dpscalc/)
 
 Known issues:
