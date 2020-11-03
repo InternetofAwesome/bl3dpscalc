@@ -4,16 +4,92 @@
 	</head>
 	<body>
 		<form id="frm">
-		Damage<br><input inputmode="numeric" name="Damage" onchange="calc()" oninput="calc()" id="dmg"><br><br>
-		Reload<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="reload"><br><br>
-		Fire Rate<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="rate"><br><br>
-		Magazine Size<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="mag"><br><br>
-		Elemental DPS<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="edps"><br><br>
-		Elemental Chance<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="epct"><br><br>
-		Effective DPS<br><input inputmode="numeric" onchange="calc()" oninput="calc()" id="dps"><br><br>
-		<br>
-		<!-- <button onclick="reset()";>Reset</button> reset screws things up for some reason.-->
-		<input type="submit" style="opacity:0;"></input>
+			<table>
+				<tr>
+					<td>Damage</td>
+					<td>
+						<input inputmode="numeric" name="Damage" onchange="calc()" oninput="calc()" id="dmg">
+					</td>
+					<td>
+						x <input inputmode="numeric" onchange="calc()" oninput="calc()" id="x" size="2em">
+					</td>
+				</tr>
+			<tr>
+				<td>
+					Reload
+				</td>
+				<td>
+					<input inputmode="numeric" onchange="calc()" oninput="calc()" id="reload">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Fire Rate
+				</td>
+				<td>
+					<input inputmode="numeric" onchange="calc()" oninput="calc()" id="rate">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Magazine Size
+				</td>
+				<td>
+					<input inputmode="numeric" onchange="calc()" oninput="calc()" id="mag">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Elemental DPS
+				</td>
+				<td>
+					<input inputmode="numeric" onchange="calc()" oninput="calc()" id="edps">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Elemental Chance
+				</td>
+				<td>
+					<input inputmode="numeric" onchange="calc()" oninput="calc()" id="epct">
+				</td>
+			</tr>
+			<tr><td>-</td></tr>
+			<tr>
+				<td>
+					Crit Damage Bonus
+				</td>
+				<td>
+					<input inputmode="numeric" onchange="calc()" oninput="calc()" id="critbonus">
+			</tr>
+			<tr><td>-</td></tr>
+			<tr>
+				<td>
+					Effective DPS
+				</td>
+				<td>
+					<input inputmode="numeric" id="dps">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Damage/Shot
+				</td>
+				<td>
+					<input inputmode="numeric" id="dpsshot">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Critical Damage/Shot
+				</td>
+				<td>
+					<input inputmode="numeric" id="dpscrit">
+				</td>
+			</tr>
+			</table>
+			<!-- <button onclick="reset()";>Reset</button> reset screws things up for some reason.-->
+			<input type="submit" style="opacity:0;"></input>
 		</form>
 		<script>
 			frm=document.getElementById("frm")
@@ -65,20 +141,48 @@
 			}
 			function calc()
 			{
-				dmg = getvalfromid('dmg')
+				x = getvalfromid('x')
+				if (x)
+					dmg = getvalfromid('dmg') * x
+				else
+					dmg = getvalfromid('dmg')
+				critbonus = getvalfromid('critbonus')/100
 				reload = getvalfromid('reload')
 				rate = getvalfromid('rate')
 				mag = getvalfromid('mag')
 				edps = getvalfromid('edps')
 				epct = getvalfromid('epct')
 				dps = 0
+
+				// Calculating crit:
+				// Additive bonuses
+				// Player skills: Skills such as Moze's Scorching RPM's or Amara's Transcend. FL4K has several critical damage skills which are added together in the formula. However, FL4K's Fade Away action skill follows different rules and is not included in this formula.
+				// Class mod bonus: Class mods sometimes have a critical hit bonus, in most cases restricted to one weapon manufacturer.
+				// Guardian Rank: The critical damage Guardian rank (accessible after the first playthrough).
+				// Anointed bonus: Some anointed gear comes with a critical hit bonus that applies under certain circumstances.
+				// Multiplicative bonuses
+				// Sniper rifle bonus: Sniper rifles from all manufacturers receive a +20% bonus.
+				// Weapon critical bonus: Many weapons come with a critical damage bonus which is listed on the item card.
+				// Manufacturer bonus: Jakobs weapons have a +10%, Hyperion weapons a +5% bonus. Other manufacturers have no bonus.
+
+				// CritDMG = NormalDMG × 2 × (100% + Add1 + Add2 + ...) × (100% + Mult1) × (100% + Mult2) × ...
 				if(dmg && reload && rate && mag)
 					dps = (dmg*mag)/(mag/rate + reload)
 				if(epct && edps)
 					dps += edps*(epct/100)
+
+				// Crit calculation
+				if(dmg)
+					crit = dmg * 2 * (1 + critbonus)
 				console.log("dps is ", dps)
+
 				if(dps)
 					document.getElementById('dps').value = Math.round(dps)
+				if(dmg)
+				{
+					document.getElementById('dpsshot').value = Math.round(dmg)
+					document.getElementById('dpscrit').value = Math.round(crit)
+				}
 
 			}
 		</script>
