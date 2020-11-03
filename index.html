@@ -62,6 +62,13 @@
 				<td>
 					<input inputmode="numeric" onchange="calc()" oninput="calc()" id="critbonus" size="4em">
 			</tr>
+			<tr>
+				<td>
+					Rounds per Shot
+				</td>
+				<td>
+					<input inputmode="numeric" onchange="calc()" oninput="calc()" id="rps" size="4em">
+			</tr>
 			<tr><td>-</td></tr>
 			<tr>
 				<td>
@@ -145,11 +152,13 @@
 			function calc()
 			{
 				x = getvalfromid('x')
+				rps = getvalfromid('rps')
 				mag = getvalfromid('mag')
 				dmg = getvalfromid('dmg')
 				if (x)
 					dmg *= x
-					mag /= x
+				if (rps)
+					mag /= rps
 				critbonus = getvalfromid('critbonus')/100
 				reload = getvalfromid('reload')
 				rate = getvalfromid('rate')
