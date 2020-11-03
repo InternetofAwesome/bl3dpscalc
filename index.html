@@ -68,7 +68,7 @@
 					Effective DPS
 				</td>
 				<td>
-					<input inputmode="numeric" id="dps" size="4em">
+					<strong id="dps" size="4em"></strong>
 				</td>
 			</tr>
 			<tr>
@@ -76,7 +76,7 @@
 					Damage/Shot
 				</td>
 				<td>
-					<input inputmode="numeric" id="dpsshot" size="4em">
+					<strong id="dpsshot"></strong>
 				</td>
 			</tr>
 			<tr>
@@ -84,7 +84,7 @@
 					Critical Damage/Shot
 				</td>
 				<td>
-					<input inputmode="numeric" id="dpscrit" size="4em">
+					<strong id="dpscrit"></strong>
 				</td>
 			</tr>
 			</table>
@@ -139,6 +139,9 @@
 				for (id of inputs)
 					document.getElementById(id).value = "";
 			}
+			function numberWithCommas(x) {
+				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
 			function calc()
 			{
 				x = getvalfromid('x')
@@ -177,11 +180,11 @@
 				console.log("dps is ", dps)
 
 				if(dps)
-					document.getElementById('dps').value = Math.round(dps)
+					document.getElementById('dps').innerHTML = numberWithCommas(Math.round(dps))
 				if(dmg)
 				{
-					document.getElementById('dpsshot').value = Math.round(dmg)
-					document.getElementById('dpscrit').value = Math.round(crit)
+					document.getElementById('dpsshot').innerHTML = numberWithCommas(Math.round(dmg))
+					document.getElementById('dpscrit').innerHTML = numberWithCommas(Math.round(crit))
 				}
 
 			}
