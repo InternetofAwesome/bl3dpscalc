@@ -145,14 +145,14 @@
 			function calc()
 			{
 				x = getvalfromid('x')
+				mag = getvalfromid('mag')
+				dmg = getvalfromid('dmg')
 				if (x)
-					dmg = getvalfromid('dmg') * x
-				else
-					dmg = getvalfromid('dmg')
+					dmg *= x
+					mag /= x
 				critbonus = getvalfromid('critbonus')/100
 				reload = getvalfromid('reload')
 				rate = getvalfromid('rate')
-				mag = getvalfromid('mag')
 				edps = getvalfromid('edps')
 				epct = getvalfromid('epct')
 				dps = 0
